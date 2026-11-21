@@ -16,13 +16,11 @@ jobs:
       - name: Unzip project
         run: |
           unzip -o BusTicketApp.zip
-          # Копируем всё из папки BusTicketApp, кроме .github
           cp -r BusTicketApp/app .
           cp BusTicketApp/build.gradle.kts .
           cp BusTicketApp/settings.gradle.kts .
           cp BusTicketApp/gradle.properties .
           cp -r BusTicketApp/gradle .
-          # Если есть README
           cp BusTicketApp/README.md . || true
 
       - name: Set up JDK 17
@@ -33,6 +31,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
 
       - name: Create Gradle Wrapper
         run: |
