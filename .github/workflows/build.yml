@@ -15,13 +15,15 @@ jobs:
 
       - name: Unzip project
         run: |
-          unzip BusTicketApp.zip
-          # Перемещаем содержимое наверх, если оно лежит во вложенной папке
-          if [ -d "BusTicketApp" ]; then
-            shopt -s dotglob
-            mv BusTicketApp/* .
-            rm -rf BusTicketApp
-          fi
+          unzip -o BusTicketApp.zip
+          # Копируем всё из папки BusTicketApp, кроме .github
+          cp -r BusTicketApp/app .
+          cp BusTicketApp/build.gradle.kts .
+          cp BusTicketApp/settings.gradle.kts .
+          cp BusTicketApp/gradle.properties .
+          cp -r BusTicketApp/gradle .
+          # Если есть README
+          cp BusTicketApp/README.md . || true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
